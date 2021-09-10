@@ -1,0 +1,19 @@
+{
+  "repository_name": "cryptography-example",
+  "description": "Contain list of example of cryptography used in tokopedia in another programming language, the goal is to speed up the partner integration ",
+  "directorate": "DGTL",
+  "namespace": "digital-b2b2c",
+  "security_owner": "azdim.fahmi@tokopedia.com",
+  "app": [
+    {
+      "name": "cryptography-example",
+      "description": "Contain list of example of cryptography used in tokopedia in another programming language, the goal is to speed up the partner integration",
+      "owner": "azdim.fahmi@tokopedia.com",
+      "slack_channel": "digital-growth-alert",
+      "db": [
+        "cryptography-example"
+      ]
+    }
+  ],
+  "last_update": "10/09/2021"
+}
