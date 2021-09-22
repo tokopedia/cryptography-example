@@ -1,0 +1,56 @@
+﻿using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.OpenSsl;
+using Org.BouncyCastle.Security;
+using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
+
+// can only run on windows machine
+namespace c__example
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var publicKey = LoadPublicKey(@"../key/pub.pem");
+            var privateKey = LoadPrivateKey(@"../key/priv.pem");
+
+            byte[] msg = Encoding.ASCII.GetBytes("test");
+            byte[] sig256 = privateKey.SignData(msg, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
+            var sig64256 = Convert.ToBase64String(sig256);
+
+            Console.WriteLine("signature " + sig64256);
+
+            var verify256 = publicKey.VerifyData(msg, sig256, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
+
+            Console.WriteLine("Signature verify: " + verify256);
+            Console.ReadKey();
+        }
+
+        public static RSACng LoadPublicKey(String path)
+        {
+            System.IO.StreamReader fileStream = File.OpenText(path);
+            PemReader pemReader = new PemReader(fileStream);
+            AsymmetricKeyParameter KeyParameter = (AsymmetricKeyParameter)pemReader.ReadObject();
+            RSAParameters rsaParams = DotNetUtilities.ToRSAParameters((RsaKeyParameters)KeyParameter);
+            RSACng RSACng = new RSACng();
+            RSACng.ImportParameters(rsaParams);
+
+            return RSACng;
+        }
+
+        public static RSACng LoadPrivateKey(String path)
+        {
+            System.IO.StreamReader fileStream = File.OpenText(path);
+            PemReader pemReader = new PemReader(fileStream);
+            AsymmetricCipherKeyPair KeyParameter = (AsymmetricCipherKeyPair)pemReader.ReadObject();
+            RSAParameters rsaParams = DotNetUtilities.ToRSAParameters((RsaPrivateCrtKeyParameters)KeyParameter.Private);
+            RSACng RSACng = new RSACng();
+            RSACng.ImportParameters(rsaParams);
+
+            return RSACng;
+        }
+    }
+}
