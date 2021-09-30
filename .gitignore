@@ -1,0 +1,9 @@
+.vscode/
+key/
+target/
+vendor/
+.settings/
+bin/
+obj/
+node_modules/
+.DS_Store
