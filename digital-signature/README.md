@@ -49,3 +49,10 @@ mvn install
 mvn exec:java -Dexec.mainClass="com.java.example.pkcs"
 ```
 
+### PYTHON
+```bash
+cd python-example
+pip3 install -r requirements.txt
+python3 digital-signature.py
+```
+
