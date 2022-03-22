@@ -2,6 +2,7 @@ var crypto = require("crypto");
 var fs = require("fs");
 var ALGORITHM = "sha256"; // Accepted: any result of crypto.getHashes(), check doc dor other options
 var SIGNATURE_FORMAT = "base64"; // Accepted: hex, latin1, base64
+const NodeRSA = require("node-rsa");
 
 function getPublicKey() {
   var pubKey = fs.readFileSync("../key/pub.pem", "utf8");
@@ -36,17 +37,24 @@ function getSignatureToVerify(data) {
 
 var publicKey = getPublicKey();
 var verify = crypto.createVerify(ALGORITHM);
-var data = "{}";
+var data = `{}`;
 var signature = getSignatureToVerify(data);
 
 console.log("\n>>> Message:\n\n" + data);
 
-verify.update(data);
+const key = new NodeRSA(publicKey);
+const saltLength =
+  key.getKeySize() / 8 -
+  2 -
+  crypto.createHash("md5").update(JSON.stringify(data)).digest("hex").length;
+console.log(">>> Salt length: " + saltLength);
 
+verify.update(data);
 var verification = verify.verify(
   {
     key: publicKey,
     padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+    saltLength: saltLength,
   },
   signature,
   SIGNATURE_FORMAT
