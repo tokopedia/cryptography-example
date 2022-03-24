@@ -22,7 +22,7 @@ public class Example {
 	public static void main(String[] args) throws Exception {
 		// write your code here
 		String payload = "{\"hello\": \"world\"}";
-		String key = "tokopedia12345";
+		String key = "tokopedia:ts-1647510734065138000";
 
 		//Encrypt Payload
 		System.out.println("ENCRYPT PAYLOAD");
