@@ -30,3 +30,9 @@ composer install
 php main.php  
 ```
 
+### JAVA
+```bash
+cd java-example
+mvn install
+mvn exec:java -Dexec.mainClass="com.java.example.pkcs"
+```
