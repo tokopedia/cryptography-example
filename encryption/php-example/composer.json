@@ -1,0 +1,10 @@
+{
+  "name": "digital-signature/php",
+  "autoload": {
+    "psr-4": {}
+  },
+  "authors": [],
+  "require": {
+    "phpseclib/phpseclib": "^3.0"
+  }
+}
