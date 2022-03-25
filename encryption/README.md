@@ -40,6 +40,6 @@ php main.php
 
 ### C# 
 ``` bash
-cd c\#-example/Encryption/
+cd c\#-example
 dotnet run 
 ```
