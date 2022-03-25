@@ -8,11 +8,7 @@ namespace Encryption
 {
     class Program
     {
-         //Example public & private key
-        public static string publickey  = "-----BEGIN PUBLIC KEY-----MII.....-----END PUBLIC KEY-----";
- 	    public static string privateKey = "-----BEGIN RSA PRIVATE KEY-----MII.....-----END RSA PRIVATE KEY-----"; 
-		
-
+         
         public static void Main(string[] args)
         {
           
@@ -33,8 +29,11 @@ namespace Encryption
         
         public static void EncryptionDecryptionProcess(string payload, string key, out string encryptedPayload, out string decryptedPayload){
           
+          var pubKeyPEM = File.ReadAllText("../key/pub.pem");
+          var privKeyPEM = File.ReadAllText("../key/priv.pem");
+
           byte[] byteskey = Encoding.ASCII.GetBytes(key);
-          byte[] bytesPublicKey = Encoding.ASCII.GetBytes(publickey);
+          byte[] bytesPublicKey = Encoding.ASCII.GetBytes(pubKeyPEM);
           
           //encrypt payload
           encryptedPayload =  Encrypt_Payload(payload, key);          
@@ -42,7 +41,7 @@ namespace Encryption
           byte[] encryptedKey = Encrypt_Key(byteskey, bytesPublicKey);
           
           //decrypt key
-          string decryptedKey = decrypt_key(Convert.ToBase64String(encryptedKey),privateKey);
+          string decryptedKey = decrypt_key(Convert.ToBase64String(encryptedKey),privKeyPEM);
           //decrypt key
           decryptedPayload = decrypt_payload(encryptedPayload, decryptedKey);
           
