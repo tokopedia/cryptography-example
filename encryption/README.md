@@ -1,7 +1,15 @@
 ## PREREQUISITE
+
+### PHP 
 There are 2 encryption on this example
 - Encrypt/Decrypt key: using RSA encryption
 - Encrypt/Decrypt payload: using AES GCM encryption
+
+### C#
+There are 2 encryption on this example
+- Encrypt/Decrypt key: using RSA OAEP 256 encryption
+- Encrypt/Decrypt payload: using AES GCM encryption
+- Min require : .NET Core
 
 ### Generate RSA Key Pair
 Create a `key` directory int root folder
@@ -29,10 +37,14 @@ cd php-example
 composer install 
 php main.php  
 ```
-
 ### JAVA
 ```bash
 cd java-example
 mvn install
 mvn exec:java -Dexec.mainClass="com.java.example.Example"
+```
+### C# 
+``` bash
+cd c\#-example
+dotnet run 
 ```
