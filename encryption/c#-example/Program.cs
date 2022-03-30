@@ -13,6 +13,7 @@ namespace Encryption
         {
           
             string plaintext = "Hello World";
+            //key must be 16bytes
             string key = "abcd123456789";
             string encryptedPayload = "";
             string decryptedPayload = "";
@@ -42,7 +43,7 @@ namespace Encryption
           
           //decrypt key
           string decryptedKey = decrypt_key(Convert.ToBase64String(encryptedKey),privKeyPEM);
-          //decrypt key
+          //decrypt payload
           decryptedPayload = decrypt_payload(encryptedPayload, decryptedKey);
           
       }

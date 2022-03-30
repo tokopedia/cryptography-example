@@ -11,6 +11,11 @@ There are 2 encryption on this example
 - Encrypt/Decrypt payload: using AES GCM encryption
 - Min require : .NET Core
 
+### JS
+There are 2 encryption on this example
+- Encrypt/Decrypt key: using RSA OAEP 256 encryption
+- Encrypt/Decrypt payload: using AES GCM encryption
+
 ### Generate RSA Key Pair
 Create a `key` directory int root folder
     
@@ -47,4 +52,10 @@ mvn exec:java -Dexec.mainClass="com.java.example.Example"
 ``` bash
 cd c\#-example
 dotnet run 
+```
+
+### JS
+``` bash
+cd js-example
+npm install crypto --save 
 ```
