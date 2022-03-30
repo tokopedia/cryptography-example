@@ -10,9 +10,9 @@ function main() {
 
     
     // Key is 16 byte
-    var key = "tokopedia1234567";
-    var keyBytes = Buffer.from(key)
-    var message = '{"hello": "world"}';
+    let key = "tokopedia1234567";
+    let keyBytes = Buffer.from(key)
+    let message = '{"hello": "world"}';
     // Public & private key
     // Example -----BEGIN PUBLIC KEY-----
     const pubKey = fs.readFileSync("/Users/brigita.dewi/Workspace/Encryption/encryption/key/pub.pem", "utf8");
@@ -21,19 +21,19 @@ function main() {
 
 
     // Encrypted Payload
-    var encryptedText = encrypt(key,message);
+    let encryptedText = encrypt(key,message);
     console.log("encryptedPayload     : ", encryptedText.toString('base64'));
 
     // Encrypted Key
-    var encryptedKey = encryptKey(pubKey,keyBytes);
+    let encryptedKey = encryptKey(pubKey,keyBytes);
     console.log("encypted key         : ", encryptedKey.toString("base64"))
 
     // Decrypted Key
-    var decryptedKey = decryptKey(privKey,encryptedKey.toString("base64"));
+    let decryptedKey = decryptKey(privKey,encryptedKey.toString("base64"));
     console.log("decrypted key        : ", decryptedKey.toString())
 
     // Decrypted Payload
-    var decryptedText = decrypt(decryptedKey.toString(),encryptedText);
+    let decryptedText = decrypt(decryptedKey.toString(),encryptedText);
     console.log("decryptedTextPayload : ",decryptedText); 
 }
 
@@ -41,7 +41,7 @@ function main() {
 function encrypt(key,text) {
     // Key is 12 byte
     const iv = crypto.randomBytes(12);
-    var message = Buffer.from(text, 'utf8');
+    let message = Buffer.from(text, 'utf8');
     let cipher = crypto.createCipheriv('aes-128-gcm',key, iv);
     let encryptedToText = cipher.update(message);
 
