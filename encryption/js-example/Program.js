@@ -8,9 +8,9 @@ var keyBytes = Buffer.from(key)
 var message = '{"hello": "world"}';
 //Public & private key
 //example -----BEGIN PUBLIC KEY-----
-const pubKey = fs.readFileSync("/Users/brigita.dewi/Workspace/Encryption/encryption/key/pub.pem", "utf8");
+const pubKey = fs.readFileSync("../key/pub.pem", "utf8");
 //example -----BEGIN RSA PRIVATE KEY-----
-const privKey = fs.readFileSync("/Users/brigita.dewi/Workspace/Encryption/encryption/key/priv.pem", "utf8");
+const privKey = fs.readFileSync("../key/priv.pem", "utf8");
 
 
 //encryptedPayload
