@@ -1,37 +1,46 @@
 const crypto = require('crypto');
 const fs = require("fs");
-//Key is 12byte
-const iv = crypto.randomBytes(12);
-//key is 16byte
-var key = "tokopedia1234567";
-var keyBytes = Buffer.from(key)
-var message = '{"hello": "world"}';
-//Public & private key
-//example -----BEGIN PUBLIC KEY-----
-const pubKey = fs.readFileSync("../key/pub.pem", "utf8");
-//example -----BEGIN RSA PRIVATE KEY-----
-const privKey = fs.readFileSync("../key/priv.pem", "utf8");
 
 
-//encryptedPayload
-var encryptedText = encrypt(key,message);
-console.log("encryptedPayload     : ", encryptedText.toString('base64'));
+console.log("Example Encryption & Decryption on Javascript")
+main();
 
-//encryptedKey
-var encryptedKey = encryptKey(pubKey,keyBytes);
-console.log("encypted key         : ", encryptedKey.toString("base64"))
 
-//decryptedKey
-var decryptedKey = decryptKey(privKey,encryptedKey.toString("base64"));
-console.log("decrypted key        : ", decryptedKey.toString())
+function main() {
 
-//decryptedPayload
-var decryptedText = decrypt(decryptedKey.toString(),encryptedText);
-console.log("decryptedTextPayload : ",decryptedText); 
- 
+    
+    // Key is 16 byte
+    var key = "tokopedia1234567";
+    var keyBytes = Buffer.from(key)
+    var message = '{"hello": "world"}';
+    // Public & private key
+    // Example -----BEGIN PUBLIC KEY-----
+    const pubKey = fs.readFileSync("/Users/brigita.dewi/Workspace/Encryption/encryption/key/pub.pem", "utf8");
+    // Example -----BEGIN RSA PRIVATE KEY-----
+    const privKey = fs.readFileSync("/Users/brigita.dewi/Workspace/Encryption/encryption/key/priv.pem", "utf8");
 
-//AES GCM encryption
+
+    // Encrypted Payload
+    var encryptedText = encrypt(key,message);
+    console.log("encryptedPayload     : ", encryptedText.toString('base64'));
+
+    // Encrypted Key
+    var encryptedKey = encryptKey(pubKey,keyBytes);
+    console.log("encypted key         : ", encryptedKey.toString("base64"))
+
+    // Decrypted Key
+    var decryptedKey = decryptKey(privKey,encryptedKey.toString("base64"));
+    console.log("decrypted key        : ", decryptedKey.toString())
+
+    // Decrypted Payload
+    var decryptedText = decrypt(decryptedKey.toString(),encryptedText);
+    console.log("decryptedTextPayload : ",decryptedText); 
+}
+
+// AES GCM encryption
 function encrypt(key,text) {
+    // Key is 12 byte
+    const iv = crypto.randomBytes(12);
     var message = Buffer.from(text, 'utf8');
     let cipher = crypto.createCipheriv('aes-128-gcm',key, iv);
     let encryptedToText = cipher.update(message);
@@ -39,7 +48,8 @@ function encrypt(key,text) {
     let encrypted = Buffer.concat([
         encryptedToText, 
         cipher.final(),
-        cipher.getAuthTag(), //16byte
+        // tag is 16 byte
+        cipher.getAuthTag(), 
         iv
         ]); 
 
@@ -52,14 +62,14 @@ function decrypt(key,text) {
     let iv = encryptedText.slice(encryptedText.byteLength - 12, encryptedText.byteLength);
 
     let decipher = crypto.createDecipheriv('aes-128-gcm', key, iv);
-    //16-> tag , 12->iv
+    // 16-> tag , 12->iv
     let decrypted = decipher.update(encryptedText.slice(0, encryptedText.byteLength - 16 - 12));
 
     decrypted = Buffer.concat([decrypted]);
     return decrypted.toString();
 }
 
-//RSA OAEP encryption
+// RSA OAEP encryption
 function encryptKey(key,textBytes) { 
     const encryptedData = crypto.publicEncrypt(
         {
