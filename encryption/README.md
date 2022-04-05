@@ -1,5 +1,10 @@
 ## PREREQUISITE
 
+### GO
+There are 2 encryption on this example
+- Encrypt/Decrypt key: using RSA encryption
+- Encrypt/Decrypt payload: using AES GCM encryption
+
 ### PHP 
 There are 2 encryption on this example
 - Encrypt/Decrypt key: using RSA encryption
@@ -36,6 +41,11 @@ Remove the RSA Key
 
 
 ## HOW TO RUN
+### GO
+``` bash
+cd go-example
+go run ./main.go
+```
 ### PHP 
 ``` bash
 cd php-example
