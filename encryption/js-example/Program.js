@@ -9,8 +9,8 @@ main();
 function main() {
 
     
-    // Key is 16 byte
-    let key = "tokopedia1234567";
+    // Key is 32 byte
+    let key = "RX9SflncVGx0dZE6qdL3xlfVumWtKmju";
     let keyBytes = Buffer.from(key)
     let message = '{"hello": "world"}';
     // Public & private key
@@ -39,10 +39,10 @@ function main() {
 
 // AES GCM encryption
 function encrypt(key,text) {
-    // Key is 12 byte
+    // iv/nonce is 12 byte
     const iv = crypto.randomBytes(12);
     let message = Buffer.from(text, 'utf8');
-    let cipher = crypto.createCipheriv('aes-128-gcm',key, iv);
+    let cipher = crypto.createCipheriv('aes-256-gcm',key, iv);
     let encryptedToText = cipher.update(message);
 
     let encrypted = Buffer.concat([
@@ -61,7 +61,7 @@ function decrypt(key,text) {
     let encryptedText = Buffer.from(text, 'base64');
     let iv = encryptedText.slice(encryptedText.byteLength - 12, encryptedText.byteLength);
 
-    let decipher = crypto.createDecipheriv('aes-128-gcm', key, iv);
+    let decipher = crypto.createDecipheriv('aes-256-gcm', key, iv);
     // 16-> tag , 12->iv
     let decrypted = decipher.update(encryptedText.slice(0, encryptedText.byteLength - 16 - 12));
 
