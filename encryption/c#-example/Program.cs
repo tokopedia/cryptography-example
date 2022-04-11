@@ -13,8 +13,8 @@ namespace Encryption
         {
           
             string plaintext = "Hello World";
-            //key must be 16bytes
-            string key = "abcd123456789";
+            //key must be 32bytes
+            string key = "RX9SflncVGx0dZE6qdL3xlfVumWtKmju";
             string encryptedPayload = "";
             string decryptedPayload = "";
 
@@ -68,7 +68,7 @@ namespace Encryption
             }
             //combine the encrypted text and the result will be (chiphertext + tag + nonce)
 			byte[] bytes = ciphertext.Concat(tag.Concat(nonce).ToArray()).ToArray();
-			return Encoding.Unicode.GetString(bytes);
+			return Convert.ToBase64String(bytes);
 		}
 
         //this encryption using RSA 2048 encryption OAEP SHA-256 algoryhtm
@@ -85,7 +85,7 @@ namespace Encryption
         //this decryption using AESGCM algoryhtm 
         public static string decrypt_payload(string payload, string key){
             byte[] keyBytes   = Encoding.ASCII.GetBytes(key);
-            byte[] cipherText = Encoding.UTF8.GetBytes(payload);
+            byte[] cipherText = Convert.FromBase64String(payload);
             
             int tagSize = 16;
             int nonceSize = 12;
