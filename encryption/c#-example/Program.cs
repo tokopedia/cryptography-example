@@ -14,7 +14,7 @@ namespace Encryption
           
             string plaintext = "Hello World";
             //key must be 32bytes
-            string key = "abcd123456789";
+            string key = "RX9SflncVGx0dZE6qdL3xlfVumWtKmju";
             string encryptedPayload = "";
             string decryptedPayload = "";
 
