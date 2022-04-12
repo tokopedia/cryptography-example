@@ -5,8 +5,9 @@ use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\Crypt\Random;
 use phpseclib3\Crypt\AES;
 
-$key = "tokopedia1234567";
+$key = 'RX9SflncVGx0dZE6qdL3xlfVumWtKmju'; // randomly generated key with length 32 byte
 $payload = '{"hello": "world"}';
+
 $pubKey = file_get_contents('../key/pub.pem');
 $privKey = file_get_contents('../key/priv.pem');
 

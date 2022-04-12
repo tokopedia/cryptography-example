@@ -1,22 +1,5 @@
 ## PREREQUISITE
 
-### GO
-There are 2 encryption on this example
-- Encrypt/Decrypt key: using RSA encryption
-- Encrypt/Decrypt payload: using AES GCM encryption
-
-### PHP 
-There are 2 encryption on this example
-- Encrypt/Decrypt key: using RSA encryption
-- Encrypt/Decrypt payload: using AES GCM encryption
-
-### C#
-There are 2 encryption on this example
-- Encrypt/Decrypt key: using RSA OAEP 256 encryption
-- Encrypt/Decrypt payload: using AES GCM encryption
-- Min require : .NET Core
-
-### JS
 There are 2 encryption on this example
 - Encrypt/Decrypt key: using RSA OAEP 256 encryption
 - Encrypt/Decrypt payload: using AES GCM encryption
@@ -68,4 +51,11 @@ dotnet run
 ``` bash
 cd js-example
 npm install crypto --save 
+```
+
+### Python
+``` bash
+cd python-example
+pip install -r requirements.txt
+python main.py
 ```
