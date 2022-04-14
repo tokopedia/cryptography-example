@@ -44,8 +44,9 @@ namespace Encryption
           //decrypt key
           string decryptedKey = decrypt_key(Convert.ToBase64String(encryptedKey),privKeyPEM);
           //decrypt payload
-          decryptedPayload = decrypt_payload(encryptedPayload, decryptedKey);
+          byte[] decryptedPayloadByte = decrypt_payload(encryptedPayload, decryptedKey);
           
+          decryptedPayload = Encoding.UTF8.GetString(decryptedPayloadByte);
       }
 
         // this encryption using AESGCM algoryhtm 
@@ -83,7 +84,7 @@ namespace Encryption
 		}
 
         //this decryption using AESGCM algoryhtm 
-        public static string decrypt_payload(string payload, string key){
+        public static byte[] decrypt_payload(string payload, string key){
             byte[] keyBytes   = Encoding.ASCII.GetBytes(key);
             byte[] cipherText = Convert.FromBase64String(payload);
             
@@ -101,7 +102,7 @@ namespace Encryption
                 aesGcm.Decrypt(nonces, chiper, tags, decryptedData);
             }
 
-            return Encoding.UTF8.GetString(decryptedData);
+            return decryptedData;
       }
 
       //this decryption using RSA 2048 OAEP SHA-256 algoryhtm

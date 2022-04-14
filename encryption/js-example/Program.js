@@ -34,7 +34,7 @@ function main() {
 
     // Decrypted Payload
     let decryptedText = decrypt(decryptedKey.toString(),encryptedText);
-    console.log("decryptedTextPayload : ",decryptedText); 
+    console.log("decryptedTextPayload : ",decryptedText.toString()); 
 }
 
 // AES GCM encryption
@@ -66,7 +66,7 @@ function decrypt(key,text) {
     let decrypted = decipher.update(encryptedText.slice(0, encryptedText.byteLength - 16 - 12));
 
     decrypted = Buffer.concat([decrypted]);
-    return decrypted.toString();
+    return decrypted;
 }
 
 // RSA OAEP encryption
