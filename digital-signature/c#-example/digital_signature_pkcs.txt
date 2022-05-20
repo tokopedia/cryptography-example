@@ -18,39 +18,39 @@ namespace c__example
             var privateKey = LoadPrivateKey(@"../key/priv.pem");
 
             byte[] msg = Encoding.ASCII.GetBytes("test");
-            byte[] sig256 = privateKey.SignData(msg, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
+            byte[] sig256 = privateKey.SignData(msg, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             var sig64256 = Convert.ToBase64String(sig256);
 
+            Console.WriteLine("message " + msg);
             Console.WriteLine("signature " + sig64256);
 
-            var verify256 = publicKey.VerifyData(msg, sig256, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
+            var verify256 = publicKey.VerifyData(msg, CryptoConfig.MapNameToOID("SHA256"), sig256);
 
-            Console.WriteLine("Signature verify: " + verify256);
+            Console.WriteLine("Signature verify 256: " + verify256);
             Console.ReadKey();
         }
 
-        public static RSACng LoadPublicKey(String path)
+        public static RSACryptoServiceProvider LoadPublicKey(String path)
         {
             System.IO.StreamReader fileStream = File.OpenText(path);
             PemReader pemReader = new PemReader(fileStream);
             AsymmetricKeyParameter KeyParameter = (AsymmetricKeyParameter)pemReader.ReadObject();
             RSAParameters rsaParams = DotNetUtilities.ToRSAParameters((RsaKeyParameters)KeyParameter);
-            RSACng RSACng = new RSACng();
-            RSACng.ImportParameters(rsaParams);
+            RSACryptoServiceProvider csp = new RSACryptoServiceProvider();// cspParams);
+            csp.ImportParameters(rsaParams);
+            return csp;
 
-            return RSACng;
         }
 
-        public static RSACng LoadPrivateKey(String path)
+        public static RSACryptoServiceProvider LoadPrivateKey(String path)
         {
             System.IO.StreamReader fileStream = File.OpenText(path);
             PemReader pemReader = new PemReader(fileStream);
             AsymmetricCipherKeyPair KeyParameter = (AsymmetricCipherKeyPair)pemReader.ReadObject();
             RSAParameters rsaParams = DotNetUtilities.ToRSAParameters((RsaPrivateCrtKeyParameters)KeyParameter.Private);
-            RSACng RSACng = new RSACng();
-            RSACng.ImportParameters(rsaParams);
-
-            return RSACng;
+            RSACryptoServiceProvider csp = new RSACryptoServiceProvider();// cspParams);
+            csp.ImportParameters(rsaParams);
+            return csp;
         }
     }
 }
