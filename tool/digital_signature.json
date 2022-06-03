@@ -1,0 +1,6 @@
+{
+    "payload": "{'text':'hello world!'}",
+    "padding_type": "PSS/PKCS",
+    "public_key": "public-key-pem",
+    "signature": "digital-signature"
+}
